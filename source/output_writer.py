@@ -18,24 +18,24 @@ set datafile separator whitespace
 scale=200
 textColor = 'black'
 set multiplot layout 1,1
-plot "{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
+plot "./output/{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
      with circles lc rgb variable fs transparent solid 0.5, \\
-     "{0}.csv" using 1:2:(sprintf("%d", $4)) with labels notitle \\
+     "./output/{0}.csv" using 1:2:(sprintf("%d", $4)) with labels notitle \\
      textcolor rgb textColor
 '''
 
     _movable_keyword = {True: 'neu', False: 'alt'}
 
-    def __init__(self, file_out: str):
+    def __init__(self, s: Stadt):
         """
         Creates OutputWriter object to write stadt config
         into a txt or csv file
         :param file_out:
         """
-        self.stadt = file_out
-        self.out_txt = ("output/" + file_out + ".txt")
-        self.out_csv = ("output/" + file_out + ".csv")
-        self.out_gnu = ("output/" + file_out + ".gnu")
+        self.stadt = s
+        self.out_txt = ("output/" + self.stadt.get_name() + ".txt")
+        self.out_csv = ("output/" + self.stadt.get_name() + ".csv")
+        self.out_gnu = ("output/" + self.stadt.get_name() + ".gnu")
 
     @staticmethod
     def dec_to_rgb(RGBint: int):
@@ -49,12 +49,15 @@ plot "{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
         red = (RGBint >> 16) & 255
         return red, green, blue
 
-    def write_txt(self, s: Stadt) -> None:
+    def write_txt(self) -> None:
         """
         Writes stadt config to txt file
         :param s: Stadt
         :return: None
         """
+        print("write txt output")
+
+        s = self.stadt
 
         out = ""
         out += "//***********************************\n"
@@ -89,13 +92,14 @@ plot "{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
         with open(self.out_txt, "w", newline="") as f:
             f.write(out)
 
-    def write_csv(self, s: Stadt) -> None:
+    def _write_gnu_script(self, s):
         """
-        Writes stadt config to csv file
-        :param s: Stadt
-        :return: None
+        Write gnuplot script fitted to current problem.
+        Makes use of class variable _gnu_template
+        :param s:
+        :return:
         """
-
+        print("write gnuplot script")
         # modify and write gnuplot script for specific problem
         with open(self.out_gnu, 'w', newline='') as gnu_script:
             gnu_script.write(OutputWriter._gnu_template.format(
@@ -103,7 +107,17 @@ plot "{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
                 s.get_length() * 1000,
                 s.get_width() * 1000
             ))
-            gnu_script.close()
+        gnu_script.close()
+
+    def write_csv(self) -> None:
+        """
+        Writes stadt config to csv file
+        :return: None
+        """
+        print("write CSV output")
+        s = self.stadt
+
+        self._write_gnu_script(s)
 
         # create and write CSV file to be read by Gnuplot
         with (open(self.out_csv, 'w', newline='') as csv_file):
@@ -137,3 +151,4 @@ plot "{0}.csv" using 1:2:($3*scale):(rgb($5,$6,$7)) \\
                      0,  # green
                      0]  # blue
                 )
+

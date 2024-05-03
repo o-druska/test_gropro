@@ -3,7 +3,6 @@ from positionable import Positionable
 
 class Stadtteil(Positionable):
     def __init__(self, x: int, y: int, unfallquote: int):
-        print("create Stadtteil")
         Positionable.__init__(self, x, y, collision=False)
         self._unfallquote = unfallquote
 

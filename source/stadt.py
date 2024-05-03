@@ -1,11 +1,16 @@
 from stadtteil import Stadtteil
 from rettungsstation import RettungsStation
-import numpy as np
 
 
 class Stadt:
     def __init__(self, name: str, unfallquoten: list[list[int]], rettungsstationen: list[RettungsStation]):
-        print(f"creating Stadt object")
+        """
+        Create Stadt object holding rescue stations, borrows and their accident rates.
+        Is assigned a name which is used to create the output files
+        :param name:
+        :param unfallquoten: used to create borrows
+        :param rettungsstationen: List of RettungsStation objects
+        """
         self._name = name
         self._rettungsstationen = rettungsstationen
 
@@ -20,22 +25,42 @@ class Stadt:
         pass
 
     def get_name(self):
+        """
+        :return: Stadt name
+        """
         return self._name
 
     def get_width(self):
+        """
+        :return: Stadt width
+        """
         return self.__width
 
     def get_length(self):
+        """
+        :return: Stadt length
+        """
         return self.__length
 
     def get_borrows(self):
+        """
+        :return: Stadt borrows as 2d-array
+        """
         return self._borrows
 
     def get_rettungsstationen(self):
+        """
+        :return: Stadt rettungsstationen as list
+        """
         return self._rettungsstationen
 
     def get_total_distance(self) -> float:
-        print("computing total distance")
+        """
+        Compute the total distance based on the weighed distances
+        of each rescue station
+        :return:
+        """
+        print("compute total distance")
         sum_ = 0.0
         for r in self._rettungsstationen:
             sum_ += r.cum_dist()

@@ -35,15 +35,16 @@ class RettungsStation(Positionable):
             return False
 
     def add_responsibility(self, responsibility: Stadtteil):
-        print(f"adding responsibility: {responsibility}")
         self._responsibilities.append(responsibility)
 
     def remove_responsibility(self, responsibility: Stadtteil):
-        print(f"removing responsibility: {responsibility}")
         self._responsibilities.remove(responsibility)
 
     def get_responsibilities(self):
         return self._responsibilities
+
+    def clear_responsibilities(self):
+        self._responsibilities.clear()
 
     def get_id(self):
         return self.__id

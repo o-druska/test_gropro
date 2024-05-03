@@ -48,7 +48,6 @@ class Positionable:
         :param p: Positionable object
         :return: float
         """
-        print("get_distance")
         return math.sqrt(
             (self._x - p.x()) ** 2
             + (self._y - p.y()) ** 2
@@ -90,6 +89,7 @@ class Positionable:
         :param: p - target Positionable
         :return: None
         """
+        print("Move " + str(self) + " to " + str(p))
 
         if self == p:
             raise NoMovementException("Self and p are on the same spot")
