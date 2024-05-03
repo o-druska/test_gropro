@@ -1,4 +1,5 @@
 // ************************************
+// Dieses Beispiel hat keine vorgegebenen festen Rettungsstationen
 // Stadtplan Matsehausen2
 // 0 vorhandene und 2 neue Stationen
 // ************************************

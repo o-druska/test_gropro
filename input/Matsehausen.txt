@@ -1,4 +1,6 @@
 // *************************************
+// Dieses ist ein default Beispiel.
+// Es sind keinerlei Sonder- oder Problemfälle bekannt.
 // Stadtplan Matsehausen
 // 1 vorhandene und 2 neue Stationen
 // *************************************
